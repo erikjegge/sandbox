@@ -24,9 +24,9 @@ import random
 import pandas as pd
 import matplotlib.pyplot as plt
 
-numberOfPeople = 100000
+numberOfPeople = 2000000
 costToPlay = 10
-weeks = 52
+weeks = 260
 
 def checkWinnings():
     winnings = 0
@@ -90,31 +90,20 @@ def checkWinnings():
 summaryResults = []
 
 for iwk in range(weeks):
-
     rows = []
-    for i in range(numberOfPeople):
-        rows.append([0])
+
+    for idx in range(numberOfPeople):
+        gainLoss = checkWinnings() - costToPlay
+        rows.append([gainLoss])
 
     df = pd.DataFrame(rows, columns=["Portfolio"])
-
-    for index, row in df.iterrows():
-        #entry fee
-        newNum = (row['Portfolio'] - costToPlay) + checkWinnings()
-
-        #df.set_value(index,'Portfolio',newNum)
-        df.at[index] = newNum
-        #print(index, row['Portfolio'])
-
     df.sort_values(by=['Portfolio'], inplace=True, ascending=False)
     df = df.reset_index(drop=True)
     df = df.reset_index()
-    #print(df)
 
     Total = df['Portfolio'].sum()
     lotteryIncome = numberOfPeople * costToPlay
     summaryResults.append([iwk, lotteryIncome, Total, lotteryIncome+Total])
-
-    
 
 df2 = pd.DataFrame(summaryResults)
 
