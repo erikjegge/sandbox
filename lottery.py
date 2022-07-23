@@ -31,6 +31,8 @@ weeks = 260
 def checkWinnings():
     winnings = 0
 
+    # change this function to only run one random number and then check it and scale the odds to the largest
+
     # check grand prize
     check = random.randint(1, 292201338)
     if check == 1:
